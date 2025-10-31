@@ -4,38 +4,26 @@ import { withProviders } from "../../hocs/with-providers";
 import { useStore } from "../../providers/store-provider/store-provider";
 import { toPriceString } from "../../utils/to-price-string";
 import type { ManagementSchemas } from "@paynow-gg/typescript-sdk";
+import type { PropertyLineProps } from "../property-line";
+import PropertyLine from "../property-line";
 
 export interface ProductDetailsProps {
   product: ManagementSchemas["ProductDto"];
 }
 
 const Line = ({
-  name,
-  value,
-  hidden = false,
   productId,
+  ...rest
 }: {
-  name: string;
-  value: string | null | undefined;
-  hidden?: boolean;
   productId: string;
-}) => {
+} & PropertyLineProps) => {
   const { store } = useStore();
 
-  if (hidden || value === null || value === undefined || (typeof value === "string" && !value)) return null;
   return (
-    <List.Item
-      title={name}
-      accessories={[{ text: value }]}
-      keywords={[name, value]}
+    <PropertyLine
+      {...rest}
       actions={
-        <ActionPanel>
-          <Action.CopyToClipboard title="Copy Value" content={value} />
-          <Action.OpenInBrowser
-            title="Open"
-            url={`https://dashboard.paynow.gg/products/${productId}?s=${store?.slug}`}
-          />
-        </ActionPanel>
+        <Action.OpenInBrowser title="Open" url={`https://dashboard.paynow.gg/products/${productId}?s=${store?.slug}`} />
       }
     />
   );

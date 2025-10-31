@@ -2,36 +2,19 @@ import { Action, ActionPanel, List } from "@raycast/api";
 import { withProviders } from "../../hocs/with-providers";
 import { useStore } from "../../providers/store-provider/store-provider";
 import type { ManagementSchemas } from "@paynow-gg/typescript-sdk";
+import PropertyLine, { type PropertyLineProps } from "../property-line";
 
 export interface TagDetailsProps {
   tag: ManagementSchemas["TagDto"];
 }
 
-const Line = ({
-  name,
-  value,
-  hidden = false,
-  tagId,
-}: {
-  name: string;
-  value: string | null | undefined;
-  hidden?: boolean;
-  tagId: string;
-}) => {
+const Line = ({ tagId, ...rest }: { tagId: string } & PropertyLineProps) => {
   const { store } = useStore();
 
-  if (hidden || value === null || value === undefined || (typeof value === "string" && !value)) return null;
   return (
-    <List.Item
-      title={name}
-      accessories={[{ text: value }]}
-      keywords={[name, value]}
-      actions={
-        <ActionPanel>
-          <Action.CopyToClipboard title="Copy Value" content={value} />
-          <Action.OpenInBrowser title="Open" url={`https://dashboard.paynow.gg/tags/${tagId}?s=${store?.slug}`} />
-        </ActionPanel>
-      }
+    <PropertyLine
+      {...rest}
+      actions={<Action.OpenInBrowser title="Open" url={`https://dashboard.paynow.gg/tags/${tagId}?s=${store?.slug}`} />}
     />
   );
 };

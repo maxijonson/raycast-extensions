@@ -1,39 +1,22 @@
-import { Action, ActionPanel, List } from "@raycast/api";
+import type { ManagementSchemas } from "@paynow-gg/typescript-sdk";
+import { Action, List } from "@raycast/api";
 import { withProviders } from "../../hocs/with-providers";
 import { useStore } from "../../providers/store-provider/store-provider";
-import type { ManagementSchemas } from "@paynow-gg/typescript-sdk";
-import React from "react";
+import type { PropertyLineProps } from "../property-line";
+import PropertyLine from "../property-line";
 
 export interface OrderDetailsProps {
   order: ManagementSchemas["OrderDto"];
 }
 
-const Line = ({
-  name,
-  value,
-  hidden = false,
-  orderId,
-  keywords = [],
-}: {
-  name: string;
-  value: string | null | undefined;
-  hidden?: boolean;
-  orderId: string;
-  keywords?: string[];
-}) => {
+const Line = ({ orderId, ...rest }: { orderId: string } & PropertyLineProps) => {
   const { store } = useStore();
 
-  if (hidden || value === null || value === undefined || (typeof value === "string" && !value)) return null;
   return (
-    <List.Item
-      title={name}
-      accessories={[{ text: value }]}
-      keywords={[name, value, ...keywords]}
+    <PropertyLine
+      {...rest}
       actions={
-        <ActionPanel>
-          <Action.CopyToClipboard title="Copy Value" content={value} />
-          <Action.OpenInBrowser title="Open" url={`https://dashboard.paynow.gg/orders/${orderId}?s=${store?.slug}`} />
-        </ActionPanel>
+        <Action.OpenInBrowser title="Open" url={`https://dashboard.paynow.gg/orders/${orderId}?s=${store?.slug}`} />
       }
     />
   );
@@ -81,9 +64,27 @@ const OrderDetails = ({ order }: OrderDetailsProps) => {
 
       <List.Section title="Customer">
         <Line orderId={order.id} keywords={["Customer"]} name="ID" value={order.customer.id} />
-        <Line orderId={order.id} keywords={["Customer"]} name="Name" value={customerName} />
-        <Line orderId={order.id} keywords={["Customer"]} name="Steam ID" value={order.customer.steam_id} />
-        <Line orderId={order.id} keywords={["Customer"]} name="Minecraft ID" value={order.customer.minecraft_uuid} />
+        <Line
+          orderId={order.id}
+          keywords={["Customer"]}
+          name="Name"
+          accessories={order.customer.profile?.avatar_url ? [{ icon: order.customer.profile.avatar_url }] : []}
+          value={customerName}
+        />
+        <Line
+          orderId={order.id}
+          keywords={["Customer"]}
+          name="Steam ID"
+          accessories={order.customer.steam?.avatar_url ? [{ icon: order.customer.steam.avatar_url }] : []}
+          value={order.customer.steam_id}
+        />
+        <Line
+          orderId={order.id}
+          keywords={["Customer"]}
+          name="Minecraft ID"
+          accessories={order.customer.minecraft?.avatar_url ? [{ icon: order.customer.minecraft.avatar_url }] : []}
+          value={order.customer.minecraft_uuid}
+        />
         <Line orderId={order.id} keywords={["Customer"]} name="Xbox ID" value={order.customer.xbox_xuid} />
         <Line orderId={order.id} keywords={["Customer"]} name="IP" value={order.customer_ip} />
       </List.Section>
