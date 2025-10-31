@@ -16,18 +16,18 @@ const Line = ({
   productId,
 }: {
   name: string;
-  value: string;
+  value: string | null | undefined;
   hidden?: boolean;
   productId: string;
 }) => {
   const { store } = useStore();
 
-  if (hidden) return null;
+  if (hidden || value === null || value === undefined || (typeof value === "string" && !value)) return null;
   return (
     <List.Item
       title={name}
       accessories={[{ text: value }]}
-      keywords={[value, name + value, value + name]}
+      keywords={[name, value]}
       actions={
         <ActionPanel>
           <Action.CopyToClipboard title="Copy Value" content={value} />
