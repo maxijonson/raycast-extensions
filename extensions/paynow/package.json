@@ -73,18 +73,18 @@
   ],
   "dependencies": {
     "@paynow-gg/typescript-sdk": "^1.0.25",
-    "@raycast/api": "^1.103.3",
-    "@raycast/utils": "^2.2.1",
-    "zod": "^4.1.12"
+    "@raycast/api": "^1.103.8",
+    "@raycast/utils": "^2.2.2",
+    "zod": "^4.1.13"
   },
   "devDependencies": {
     "@raycast/eslint-config": "^2.1.1",
-    "@types/node": "24.7.0",
-    "@types/react": "19.2.2",
-    "eslint": "^9.37.0",
+    "@types/node": "24.10.1",
+    "@types/react": "19.2.7",
+    "eslint": "^9.39.1",
     "eslint-plugin-prettier": "^5.5.4",
-    "eslint-plugin-react-hooks": "^6.1.1",
-    "prettier": "^3.6.2",
+    "eslint-plugin-react-hooks": "^7.0.1",
+    "prettier": "^3.7.1",
     "typescript": "^5.9.3"
   },
   "type": "module",
