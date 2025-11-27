@@ -62,6 +62,28 @@ const OrderDetails = ({ order }: OrderDetailsProps) => {
       <Line orderId={order.id} name="Total Amount" value={order.total_amount_str} />
       <Line orderId={order.id} name="Currency" value={order.currency.toUpperCase()} />
 
+      <Line orderId={order.id} name="Subscription ID" value={order.subscription_id} />
+      <Line orderId={order.id} name="Coupon ID" value={order.coupon_id} />
+      <Line orderId={order.id} name="Affiliate ID" value={order.affiliate_id} />
+      <Line orderId={order.id} name="Checkout ID" value={order.checkout_id} />
+      <Line orderId={order.id} name="Checkout Token" value={order.checkout_token} />
+
+      <Line
+        orderId={order.id}
+        name="Created At"
+        value={new Date(order.created_at || 0).toLocaleString()}
+        hidden={!order.created_at}
+      />
+      <Line
+        orderId={order.id}
+        name="Completed At"
+        value={new Date(order.completed_at || 0).toLocaleString()}
+        hidden={!order.completed_at}
+      />
+
+      <Line orderId={order.id} name="Type" value={orderType} />
+      <Line orderId={order.id} name="Status" value={order.status} />
+
       <List.Section title="Customer">
         <Line orderId={order.id} keywords={["Customer"]} name="ID" value={order.customer.id} />
         <Line
@@ -100,28 +122,6 @@ const OrderDetails = ({ order }: OrderDetailsProps) => {
           value={`${order.billing_cycle_sequence}`}
         />
       </List.Section>
-
-      <Line orderId={order.id} name="Subscription ID" value={order.subscription_id} />
-      <Line orderId={order.id} name="Coupon ID" value={order.coupon_id} />
-      <Line orderId={order.id} name="Affiliate ID" value={order.affiliate_id} />
-      <Line orderId={order.id} name="Checkout ID" value={order.checkout_id} />
-      <Line orderId={order.id} name="Checkout Token" value={order.checkout_token} />
-
-      <Line
-        orderId={order.id}
-        name="Created At"
-        value={new Date(order.created_at || 0).toLocaleString()}
-        hidden={!order.created_at}
-      />
-      <Line
-        orderId={order.id}
-        name="Completed At"
-        value={new Date(order.completed_at || 0).toLocaleString()}
-        hidden={!order.completed_at}
-      />
-
-      <Line orderId={order.id} name="Type" value={orderType} />
-      <Line orderId={order.id} name="Status" value={order.status} />
     </List>
   );
 };

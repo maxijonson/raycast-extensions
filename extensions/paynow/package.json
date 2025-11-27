@@ -72,7 +72,7 @@
     }
   ],
   "dependencies": {
-    "@paynow-gg/typescript-sdk": "^1.0.20",
+    "@paynow-gg/typescript-sdk": "^1.0.25",
     "@raycast/api": "^1.103.3",
     "@raycast/utils": "^2.2.1",
     "zod": "^4.1.12"

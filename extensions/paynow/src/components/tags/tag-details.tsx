@@ -25,6 +25,7 @@ const TagDetails = ({ tag }: TagDetailsProps) => {
       <Line tagId={tag.id} name="ID" value={tag.id} />
       <Line tagId={tag.id} name="Name" value={tag.name} />
       <Line tagId={tag.id} name="Slug" value={tag.slug} />
+      <Line tagId={tag.id} name="Description" value={tag.description} />
       <Line
         tagId={tag.id}
         name="Created At"
