@@ -5,7 +5,12 @@ import prettierPlugin from "eslint-plugin-prettier";
 
 export default defineConfig([
   ...raycastConfig,
-  reactHooks.configs["recommended-latest"],
+  {
+    ...reactHooks.configs["recommended-latest"],
+    plugins: {
+      "react-hooks": reactHooks,
+    },
+  },
   {
     plugins: {
       prettier: prettierPlugin,
